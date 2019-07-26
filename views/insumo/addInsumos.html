@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="cadastroInsumo">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="../lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <link href="../lib/bootstrap/style.css" rel="stylesheet">
+
+    <script src="../lib/angular/angular.js"></script>
+    <script>
+        angular.module("cadastroInsumo", []); //criação do módulo
+        angular.module("cadastroInsumo").controller("cadastroInsumoCtrl", function ($scope, $http) {
+            $scope.title = "Página de Cadastro de Insumo";
+            $scope.insumo = [];
+
+            $scope.adicionaInsumo = function (insumo) {
+                delete $scope.login;
+                $scope.loginForm.$setPristine();
+            };
+
+        });
+    </script>
+
+    <title>Cachaça Gestor</title>
+</head>
+
+<body ng-controller="cadastroInsumoCtrl">
+    <div class="container">
+        <h1>Insumo</h1>
+        <hr>
+        <form name="insumoForm">
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="nome">Nome: <span class="glyphicon glyphicon-asterisk red"></span></label><br>
+                    <input ng-required="true" ng-model="insumo.nome" ng-requered="true" type="text" class="form-control"
+                        name="nome" placeholder="Exemplo: Uai Minas">
+                </div>
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="descricao">Descrição: </label><br>
+                    <input ng-model="insumo.descricao" type="text" class="form-control" name="descricao"
+                        placeholder="Exemplo: Uai Minas 800ml">
+                </div>
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="estoque">Estoque: </label><br>
+                    <input ng-model="insumo.estoque" type="text" class="form-control" name="estoque"
+                        placeholder="Exemplo: 500">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="categoria">Categoria: <span class="glyphicon glyphicon-asterisk red"></span></label><br>
+                    <select name="categoria" ng-model="insumo.categoria" class="form-control">
+                        <option value=""> Selecione uma categoria</option>
+                        <option value="caixa"> Caixa </option>
+                        <option value="garrafa"> Garrafa </option>
+                    </select>
+                </div>
+                <div name="divGarrafa" ng-if="insumo.categoria == 'garrafa'" class="form-group col-md-4 col-sm-6">
+                    <label for="garrafa">Capacidade da garrafa (ml): <span
+                            class="glyphicon glyphicon-asterisk red"></span></label><br>
+                    <input ng-model="insumo.garrafa" ng-required="insumo.categoria == 'garrafa'" type="text"
+                        name="garrafa" class="form-control" placeholder="Capacidade da garrafa">
+                </div>
+                <div name="divCaixa" ng-if="insumo.categoria == 'caixa'" class="form-group  col-md-4 col-sm-6">
+                    <label for="caixa">Capacidade da caixa (unidade): <span
+                            class="glyphicon glyphicon-asterisk red"></span></label><br>
+                    <input type="text" ng-required="insumo.categoria == 'caixa'" ng-model="insumo.caixa"
+                        class="form-control" name="caixa" placeholder="Quantidade de caixas">
+                </div>
+            </div>
+            <div class="row"></div>
+            <div class="row">
+                <a href="insumo.html" ng-Click="retornaPrincipal()" class="btn btn-danger btn-lg pull-left"
+                    name="btnCancela" role="button">Cancelar</a>
+                <button ng-Click="adicionaInsumo(insumo)" class="btn btn-success btn-lg pull-right"
+                    name="btnAdiciona">Adicionar</button>
+            </div>
+
+        </form>
+
+        <div name="msgCampoNome" ng-show="insumoForm.nome.$error.required && insumoForm.nome.$dirty"
+            class="alert alert-danger">
+            Preencha o campo Nome
+        </div>
+
+        <div name="msgCampoCaixas" ng-show="insumoForm.caixa.$error.required && insumoForm.caixa.$dirty"
+            class="alert alert-danger">
+            Preencha a quantidade de caixas
+        </div>
+
+        <div name="msgCampoGarrafas" ng-show="insumoForm.garrafa.$error.required && insumoForm.garrafa.$dirty"
+            class="alert alert-danger">
+            Preencha a capacidade das garrafas
+        </div>
+    </div>
+
+    <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
+    <script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="insumo">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link href="../lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+        <link href="../lib/bootstrap/style.css" rel="stylesheet">
+
+        <script src="../lib/angular/angular.js"></script>
+        <script>
+            angular.module("insumo", []); //criação do módulo
+            angular.module("insumo").controller("insumoCtrl", function ($scope, $http){
+                $scope.title = "Página de Insumo";
+                $scope.insumos = [
+                    {nome: "Garrafa Oslo 700ml",
+                    categoria: "GARRAFAS", 
+                    descricao: "garrafa cachaça ouro",
+                    estoque: 5,
+                    capacidade: 580
+                    },
+                    {nome: "Garrafa 51 700ml",
+                    categoria: "CAIXAS", 
+                    descricao: "garrafa cachaça ouro",
+                    estoque: 10,
+                    capacidade: 700
+                    }];
+                    
+                $scope.apagarInsumo = function(insumo){
+                    
+                };
+                $scope.ordenarPor = function(campo){
+                    $scope.criterioOrdenacao = campo;
+                    $scope.direcaoOrdenacao = !$scope.direcaoOrdenacao;
+                };
+        });
+        </script>
+
+        <title>Cachaça Gestor</title>
+    </head>
+    <body  ng-controller="insumoCtrl">
+            <div class="container">
+                <h1>Insumos</h1><hr>
+                <a href="addInsumos.html" class="btn btn-success btn-block" role="button"><span class="glyphicon glyphicon-plus"></span> Adicionar insumo</a>
+                <input class="form-control block" type="text" ng-model="busca" placeholder="Pesquisar em insumos"/>
+                <table ng-show="insumos.length > 0" class="table table-striped">
+                    <tr>
+                        <th><a href="" ng-click="ordenarPor('nome')">Nome <i class="fa fa-sort"></i></a></th>
+                        <th><a href="" ng-click="ordenarPor('categoria')">Categoria <i class="fa fa-sort"></i></a></th>
+                        <th><a href="" ng-click="ordenarPor('descricao')">Descrição <i class="fa fa-sort"></i></a></th>
+                        <th><a href="" ng-click="ordenarPor('estoque')">Estoque <i class="fa fa-sort"></i></a></th>
+                        <th>Editar/Deletar</th>
+                    </tr>
+                    <tr ng-repeat="insumo in insumos | filter: busca | orderBy:criterioOrdenacao:direcaoOrdenacao"> <!--ng-class="{'selecionado: contato.selecionado}"-->
+                        
+                        <td>{{insumo.nome}}</td>
+                        <td>{{insumo.categoria}}</td>
+                        <td>{{insumo.descricao}}</td>
+                        <td>{{insumo.estoque}}</td>
+
+                        <td>
+                            <a href="edicaoInsumo.html" ng-click="editarInsumo('insumo')"><i class="iconeEditar fa fa-pencil"></i></a>
+                            
+                            <a href="#" ng-click="excluirInsumo('insumo')"><i class="iconeLixeira fa fa-trash"></i></a>
+
+                            <a href="#" ng-click="detalheInsumo('insumo')" data-toggle="modal" data-target="#modalDetalhes"><i class="iconeDetalhe fa fa-list"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div> 
+                 
+            <div class="modal fade" id="modalDetalhes" role="dialog">
+                <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Detalhes</h4>
+                    </div>
+                    <div class="modal-body">
+                    {{insumos}}
+                    </div>
+                    <div class="modal-footer">
+                    <button name="btnFechaModal" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+                  
+        <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
+        <script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>

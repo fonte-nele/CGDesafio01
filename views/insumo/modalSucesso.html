@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="mensagem">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap -->
+        <link href="../lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+        <link href="../lib/bootstrap/style.css" rel="stylesheet">
+
+        <title>Cachaça Gestor</title>
+        <script src="../lib/angular/angular.js"></script>
+        <script>
+            angular.module("mensagem", []); //criação do módulo
+            angular.module("mensagem").controller("mensagemCtrl", function ($scope, $http){
+                $scope.title = "Sucesso";
+                $scope.mensagem = "Mensagem de sucesso";
+        });
+        </script>
+    </head>
+    <body ng-controller="mensagemCtrl"> 
+        <div class="modal modal-mensagem" id="modalMensagemSucesso" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h1>{{title}}</h1>
+                        <h4>{{mensagem}}</h4>
+                    </div>
+                    <div class="modal-footer">
+                    <button name="btnFechaModal" type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                  
+        <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
+        <script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    </body>
+</html>
