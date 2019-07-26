@@ -31,13 +31,13 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
 app.get("/", (req, res) => {
-  //res.sendFile(__dirname + "/views/index.html");
-  //res.
-  res.send('Login');
+  res.sendFile(__dirname + "/views/index.html");
+  //res.sendStatus(200);
 });
 
 // Login Form Post
 app.post('/', (req, res, next) => {
+
   passport.authenticate('local', {
     successRedirect: '/insumos',
     failureRedirect: '/',
@@ -46,9 +46,9 @@ app.post('/', (req, res, next) => {
 });
 
 app.get("/insumos", (req, res) => {
-  //res.sendFile(__dirname + "/views/insumo/addInsumos.html");
-
-  res.send('Pagina de Insumos');
+  res.sendFile(__dirname + "/views/insumo/addInsumos.html");
+  //res.send('Pagina de Insumos');
+  //res.redirect('/insumos');
 });
 
 app.post("/insumos", (req, res) => {
@@ -113,8 +113,8 @@ app.put('/insumos/:id', (req, res) => {
       insumo.save()
         .then(insumo => {
           req.flash('success_msg', 'Insumo atualizado');
-          //res.redirect('/insumos');
-          res.send('Insumo editado com sucesso.');
+          res.redirect('/insumos');
+          //res.send('Insumo editado com sucesso.');
         })
     });
 });
@@ -124,8 +124,8 @@ app.delete('/insumos/:id', (req, res) => {
   Insumo.remove({ _id: req.params.id })
     .then(() => {
       req.flash('success_msg', 'Insumo removido');
-      //res.redirect('/insumos');
-      res.send('Insumo excluido com sucesso');
+      res.redirect('/insumos');
+      //res.send('Insumo excluido com sucesso');
     });
 });
 
