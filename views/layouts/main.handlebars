@@ -1,70 +1,34 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="login">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
 
-        <!-- Bootstrap -->
-        <link href="../lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css" class="">
+    <title>Vidjot</title>
+</head>
 
-        <link href="../lib/bootstrap/style.css" rel="stylesheet">
+<body>
+    {{> _navbar}}
 
-        <script src="../lib/angular/angular.js"></script>
-        <script>
-            angular.module("login", []); //criação do módulo
-            angular.module("login").controller("loginCtrl", function ($scope, $http){
-                $scope.title = "Acesso ao Cachaça Gestor";
-                $scope.login = [
-                    {usuario: "João", senha: "123"},
-                    {usuario: "Ana", senha: "123"},
-                    {usuario: "Maria", senha: "123"},
-                    {usuario: "Pedro", senha: "123"},
-                ];
+    <div class="container">
+        {{> _msg}}
+        {{> _errors}}
+        {{{body}}}
+    </div>
 
-                $scope.autenticarUsuario = function(login){
-                    
-                    delete $scope.login;
-                    $scope.loginForm.$setPristine();
-                };
-        });
-        </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
 
-        <title>Cachaça Gestor</title>
-    </head>
-    <body  ng-controller="loginCtrl">
-        <div class="wrapper">
-          <div id="formContent">
-            <h2>{{title}}</h2>
-            <form name="loginForm">
-                <div class="form-group">
-                    <input type="text" id="login" class="fadeIn second" ng-required="true" autocomplete="username" name="usuario" ng-model="login.usuario" placeholder="Usuário">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="password" ng-required="true" class="fadeIn third" name="senha" autocomplete="current-password" ng-model="login.senha" placeholder="Senha">
-                </div>
-                <button ng-click="autenticarUsuario(login)" ng-disabled="loginForm.$invalid" name="botaoLogin" type="submit" class="btn btn-padrao btn-lg">Login</button><br>
-                <a class="h4" name="recuperacaoSenha">Esqueceu sua senha?</a>
-            </form>
-        
-            <div id="formFooter">
-              Você não possui uma conta? Crie uma conta <a class="underlineHover" href="#">aqui</a>
-            </div>
-
-            <div name="msgCampoUsuario" ng-show="loginForm.usuario.$error.required && loginForm.usuario.$dirty" class="alert alert-danger">
-                    O campo Usuário é obrigatório!
-                </div>
-
-            <div name="msgCampoSenha" ng-show="loginForm.senha.$error.required && loginForm.senha.$dirty" class="alert alert-danger">
-                O campo Senha é obrigatório!
-            </div>
-
-          </div>
-        </div>
-
-        <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necessário -->
-        <script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    </body>
 </html>

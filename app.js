@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/views/index.html");
 });
 
 // Login Form Post
@@ -65,13 +65,13 @@ app.post("/insumos", (req, res) => {
 
   if (errors.length > 0) {
     console.log("Erro: " + errors),
-    res.render('/insumos', {
-      errors: errors,
-      categoria: req.body.categoria,
-      descricao: req.body.descricao,
-      estoque: req.body.estoque,
-      capacidade: req.body.capacidade
-    });
+      res.render('/insumos', {
+        errors: errors,
+        categoria: req.body.categoria,
+        descricao: req.body.descricao,
+        estoque: req.body.estoque,
+        capacidade: req.body.capacidade
+      });
   }
   else {
     const newInsumo = {
@@ -86,7 +86,7 @@ app.post("/insumos", (req, res) => {
       .save()
       .then(insumo => {
         console.log('sucesso'),
-        res.redirect('/insumos');
+          res.redirect('/insumos');
       })
   }
 });
@@ -94,31 +94,31 @@ app.post("/insumos", (req, res) => {
 // Edit Insumo
 app.put('/insumos/:id', (req, res) => {
   Insumo.findOne({
-      _id: req.params.id
+    _id: req.params.id
   })
-      .then(insumo => {
-          // new values
-          insumo.nome = req.body.nome,
-          insumo.categoria = req.body.categoria,
-          insumo.descricao = req.body.descricao,
-          insumo.estoque = req.body.estoque,
-          insumo.capacidade = req.body.capacidade
-      
-          idea.save()
-              .then(insumo => {
-                  req.flash('success_msg', 'Insumo atualizado');
-                  res.redirect('/insumos');
-              })
-      });
+    .then(insumo => {
+      // new values
+      insumo.nome = req.body.nome,
+      insumo.categoria = req.body.categoria,
+      insumo.descricao = req.body.descricao,
+      insumo.estoque = req.body.estoque,
+      insumo.capacidade = req.body.capacidade
+
+      insumo.save()
+        .then(insumo => {
+          req.flash('success_msg', 'Insumo atualizado');
+          res.redirect('/insumos');
+        })
+    });
 });
 
 // Delete Insumo
 app.delete('/insumos/:id', (req, res) => {
   Insumo.remove({ _id: req.params.id })
-      .then(() => {
-          req.flash('success_msg', 'Insumo removido');
-          res.redirect('/insumos');
-      });
+    .then(() => {
+      req.flash('success_msg', 'Insumo removido');
+      res.redirect('/insumos');
+    });
 });
 
 const port = 5000;
