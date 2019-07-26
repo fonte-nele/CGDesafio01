@@ -35,11 +35,11 @@ app.get("/", (req, res) => {
 });
 
 // Login Form Post
-app.post('/', (req, res, next) =>{
+app.post('/', (req, res, next) => {
   passport.authenticate('local', {
-      successRedirect: '/insumos',
-      failureRedirect: '/',
-      failureFlash: true
+    successRedirect: '/insumos',
+    failureRedirect: '/',
+    failureFlash: true
   })(req, res, next);
 });
 
@@ -51,20 +51,27 @@ app.post("/insumos", (req, res) => {
   let errors = [];
 
   if (!req.body.nome) {
-    errors.push("Adicione um nome !");
+    errors.push("Sem nome. Favor adicionar!");
   }
   if (!req.body.categoria) {
-    errors.push("Adicione uma categoria !");
+    errors.push("Sem categoria. Favor adicionar!");
   }
-  if (!req.body.estoque) {
-    errors.push("Adicione um valor para o estoque !");
+  if (!req.body.estoque || req.body.estoque != 0) {
+    errors.push("Sem estoque. Favor adicionar!");
   }
-  if (!req.body.capacidade) {
-    errors.push("Adicione uma capacidade !");
+  if (!req.body.capacidade || req.body.capacidade != 0) {
+    errors.push("Sem capacidade. Favor adicionar!");
   }
 
   if (errors.length > 0) {
-    console.log("Erro: " + errors);
+    console.log("Erro: " + errors),
+    res.render('/insumos', {
+      errors: errors,
+      categoria: req.body.categoria,
+      descricao: req.body.descricao,
+      estoque: req.body.estoque,
+      capacidade: req.body.capacidade
+    });
   }
   else {
     const newInsumo = {
@@ -73,13 +80,45 @@ app.post("/insumos", (req, res) => {
       descricao: req.body.descricao,
       estoque: req.body.estoque,
       capacidade: req.body.capacidade
+      //user: req.user.id
     }
     new Insumo(newInsumo)
       .save()
       .then(insumo => {
-        res.redirect('/insumo');
+        console.log('sucesso'),
+        res.redirect('/insumos');
       })
   }
+});
+
+// Edit Insumo
+app.put('/insumos/:id', (req, res) => {
+  Insumo.findOne({
+      _id: req.params.id
+  })
+      .then(insumo => {
+          // new values
+          insumo.nome = req.body.nome,
+          insumo.categoria = req.body.categoria,
+          insumo.descricao = req.body.descricao,
+          insumo.estoque = req.body.estoque,
+          insumo.capacidade = req.body.capacidade
+      
+          idea.save()
+              .then(insumo => {
+                  req.flash('success_msg', 'Insumo atualizado');
+                  res.redirect('/insumos');
+              })
+      });
+});
+
+// Delete Insumo
+app.delete('/insumos/:id', (req, res) => {
+  Insumo.remove({ _id: req.params.id })
+      .then(() => {
+          req.flash('success_msg', 'Insumo removido');
+          res.redirect('/insumos');
+      });
 });
 
 const port = 5000;
