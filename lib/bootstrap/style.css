@@ -1,5 +1,51 @@
-.form-row{
+.modal-mensagem{
+  display: block;
+}
+
+.iconeLixeira{
+  color: white;
+  background-color: red;
+  padding: 10px;
+}
+.iconeEditar{
+  color: white;
+  background-color: green;
+  padding: 10px;
+}
+.iconeDetalhe{
+  color: white;
+  background-color: brown;
+  padding: 10px;
+}
+
+.btn-block {
+  width: auto;
+}
+
+.container{
+  background-color: #FFFFFF;
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
   padding: 15px;
+  border-bottom: 10px;
+}
+
+.red{
+  color:red;
+}
+
+.btn{
+  margin: 20px;
+}
+
+body{
+  background-color: lightgray;
+}
+
+.form-group{
+  margin: 0px;
+  padding: 5px;
 }
 
 .btn-padrao{
@@ -93,7 +139,7 @@ input[type=text], input[type=password]{
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 85%;
+  width: 100%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -338,6 +384,7 @@ input[type=text], input[type=password]:placeholder {
   .jumbotron {
     background-color:#fff;
     text-align: center;
+    border-color: gray;
   }
   .jumbotron h2 {
     font-size: 40px;

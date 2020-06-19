@@ -19,10 +19,12 @@
             $scope.insumo = [];
 
             $scope.adicionaInsumo = function (insumo) {
-                delete $scope.login;
-                $scope.loginForm.$setPristine();
-            };
-
+                $http.post("http://localhost:5000/insumo/addInsumos", insumo).then(
+                    function(response){
+                        delete $scope.insumo;
+                        $scope.adicionaInsumo.$setPristine();
+                });
+            }
         });
     </script>
 

@@ -30,13 +30,70 @@ app.use(bodyParser.json());
 // Method override middleware
 app.use(methodOverride('_method'));
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
+  res.render('users/register');
+});
+
+app.post('/', (req, res) => {
+  let errors = [];
+
+  if (req.body.password != req.body.password2) {
+    errors.push({ text: 'Passwords do not match' });
+  }
+  if (req.body.password.length < 4) {
+    errors.push({ text: 'Passwords must be at least 4 characters' });
+  }
+  if (errors.length > 0) {
+    res.render('users/register', {
+      errors: errors,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      //password2: req.body.password2
+    });
+  } else {
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (user) {
+          req.flash('error_msg', 'Email already registered');
+          res.send('Fail');
+          //res.redirect('users/register');
+        } else {
+          const newUser = new User({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+          });
+          //console.log(newUser);
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser.save()
+                .then(user => {
+                  req.flash('sucess_msg', 'You are now register and can log in');
+                  req.send(201);
+                  //res.redirect('/login');
+                })
+                .catch(err => {
+                  console.log(err);
+                  return;
+                });
+            });
+
+          });
+        }
+      });
+  }
+});
+
+app.get("/login", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
   //res.sendStatus(200);
 });
 
 // Login Form Post
-app.post('/', (req, res, next) => {
+app.post("/login", (req, res, next) => {
 
   passport.authenticate('local', {
     successRedirect: '/insumos',
@@ -47,7 +104,7 @@ app.post('/', (req, res, next) => {
 
 app.get("/insumos", (req, res) => {
   res.sendFile(__dirname + "/views/insumo/addInsumos.html");
-  //res.send('Pagina de Insumos');
+  //res.send('Ok! Pagina de Insumos');
   //res.redirect('/insumos');
 });
 
@@ -114,7 +171,7 @@ app.put('/insumos/:id', (req, res) => {
         .then(insumo => {
           req.flash('success_msg', 'Insumo atualizado');
           res.redirect('/insumos');
-          //res.send('Insumo editado com sucesso.');
+          //res.send('Ok! Insumo editado com sucesso.');
         })
     });
 });
@@ -125,7 +182,7 @@ app.delete('/insumos/:id', (req, res) => {
     .then(() => {
       req.flash('success_msg', 'Insumo removido');
       res.redirect('/insumos');
-      //res.send('Insumo excluido com sucesso');
+      //res.send('Ok! Insumo excluido com sucesso');
     });
 });
 
